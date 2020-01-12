@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1090258945629",
+    "firebase_url": "https://choosepad-65b8c.firebaseio.com",
+    "project_id": "choosepad-65b8c",
+    "storage_bucket": "choosepad-65b8c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1090258945629:android:53990f2a1332638c626fb4",
+        "android_client_info": {
+          "package_name": "com.fujikinaga.choosepad"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1090258945629-49pr24fft4sf7nmj9o0esreja2ahh2ue.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fujikinaga.choosepad",
+            "certificate_hash": "83899e67e753dc2c5c484f9d91203b755a659ffc"
+          }
+        },
+        {
+          "client_id": "1090258945629-ui2ca66o8c3srgg36acicicn058sd16m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiMKtfURhKQRix_nz-AtiDChT2FDSAFcU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1090258945629-ui2ca66o8c3srgg36acicicn058sd16m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
