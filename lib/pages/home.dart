@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ToggleSplashNotification extends Notification {}
 
@@ -56,32 +57,24 @@ class HomePage extends StatelessWidget {
                     final event = snapshot.data[index];
 
                     return Card(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: <Widget>[
-                          ListTile(
-                            title: Text(
-                              event.title,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            subtitle: Text(
-                              event.description,
-                            ),
+                      margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
+                      child: ListTile(
+                        leading: Image.network(
+                          event.imageUrl,
+                          fit: BoxFit.fitWidth,
+                        ),
+                        title: Text(
+                          event.title,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
                           ),
-                          Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: Image.network(
-                                  event.imageUrl,
-                                  fit: BoxFit.none,
-                                  height: 128,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                        ),
+                        subtitle: Text(
+                          event.description,
+                        ),
+                        onTap: () {
+                          _launchURL(event.getLink());
+                        },
                       ),
                     );
                   },
@@ -101,5 +94,13 @@ class HomePage extends StatelessWidget {
         },
       ),
     );
+  }
+
+  _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

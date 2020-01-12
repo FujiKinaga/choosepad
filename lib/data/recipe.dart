@@ -11,7 +11,7 @@ class Recipe {
   Recipe(this.recipeId, this.tag, this.title, this.description, this.imageUrl);
 
   String getLink() {
-    return videoPath + recipeId.toString();
+    return videoPath + recipeId;
   }
 }
 
