@@ -1,6 +1,6 @@
-import 'package:choosepad/recipe_list_event.dart';
-import 'package:choosepad/repository/recipe_list_repository.dart';
-import 'package:choosepad/recipe_list_state.dart';
+import 'package:choosepad/bloc/recipe/recipe_list_event.dart';
+import 'package:choosepad/repository/recipe/recipe_list_repository.dart';
+import 'package:choosepad/bloc/recipe/recipe_list_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 

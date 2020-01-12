@@ -1,6 +1,6 @@
 import 'package:choosepad/data/recipe.dart';
 import 'package:choosepad/data/tag.dart';
-import 'package:choosepad/repository/recipe_list_repository.dart';
+import 'package:choosepad/repository/recipe/recipe_list_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirestoreRecipeListRepository extends RecipeListRepository {
