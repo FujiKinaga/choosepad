@@ -2,7 +2,7 @@ import 'package:choosepad/bloc/recipe/recipe_list_bloc.dart';
 import 'package:choosepad/bloc/recipe/recipe_list_state.dart';
 import 'package:choosepad/bloc/user/authentication_bloc.dart';
 import 'package:choosepad/bloc/user/sign_in_bloc.dart';
-import 'package:choosepad/data/recipe.dart';
+import 'package:choosepad/data/recipe_ogp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
@@ -36,7 +36,7 @@ class HomePage extends StatelessWidget {
           if (state is RecipeListSuccess) {
             return StreamBuilder(
               stream: state.recipeList,
-              builder: (context, AsyncSnapshot<List<Recipe>> snapshot) {
+              builder: (context, AsyncSnapshot<List<RecipeOgp>> snapshot) {
                 if (!snapshot.hasData) {
                   return Center(
                     child: CircularProgressIndicator(),
@@ -60,7 +60,7 @@ class HomePage extends StatelessWidget {
                       margin: EdgeInsets.fromLTRB(16, 8, 16, 8),
                       child: ListTile(
                         leading: Image.network(
-                          event.imageUrl,
+                          event.image,
                           fit: BoxFit.fitWidth,
                         ),
                         title: Text(
@@ -73,7 +73,7 @@ class HomePage extends StatelessWidget {
                           event.description,
                         ),
                         onTap: () {
-                          _launchURL(event.getLink());
+                          _launchURL(event.url);
                         },
                       ),
                     );

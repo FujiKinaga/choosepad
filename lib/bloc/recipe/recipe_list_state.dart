@@ -1,4 +1,4 @@
-import 'package:choosepad/data/recipe.dart';
+import 'package:choosepad/data/recipe_ogp.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
@@ -18,7 +18,7 @@ class RecipeListInProgress extends RecipeListState {
 }
 
 class RecipeListSuccess extends RecipeListState {
-  final Stream<List<Recipe>> recipeList;
+  final Stream<List<RecipeOgp>> recipeList;
 
   RecipeListSuccess({@required this.recipeList}) : assert(recipeList != null);
 

@@ -1,5 +1,5 @@
-import 'package:choosepad/data/recipe.dart';
+import 'package:choosepad/data/recipe_ogp.dart';
 
 abstract class RecipeListRepository {
-  Stream<List<Recipe>> fetch();
+  Stream<List<RecipeOgp>> fetch();
 }
