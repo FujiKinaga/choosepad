@@ -28,7 +28,7 @@ Recipe _getDummyRecipe2() {
 
 Recipe _getDummyRecipe3() {
   return Recipe(
-    "7360",
+    "7352",
     getDummyTag(),
   );
 }

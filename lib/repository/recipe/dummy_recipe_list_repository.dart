@@ -1,31 +1,40 @@
+import 'dart:math';
+
+import 'package:choosepad/constants.dart';
 import 'package:choosepad/data/recipe.dart';
 import 'package:choosepad/data/recipe_ogp.dart';
+import 'package:choosepad/data/tag.dart';
 import 'package:choosepad/repository/recipe/recipe_list_repository.dart';
-import 'package:html/parser.dart';
 import 'package:html/dom.dart';
+import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
 
 class DummyRecipeListRepository extends RecipeListRepository {
+  var _random = new Random();
 
   @override
   Stream<List<RecipeOgp>> fetch() async* {
-    var recipeList = getDummyRecipeList();
+    var ogpList = List<RecipeOgp>();
 
-    var ogpList = List<RecipeOgp>(recipeList.length);
-
-    for (int i = 0; i < recipeList.length; i++) {
-      var recipe = recipeList[i];
-      convertToRecipeList(recipe).then((recipeOgp) {
-        ogpList[i] = recipeOgp;
-      });
-    }
-
-    yield* Stream.value(ogpList);
+    do {
+      var randomRecipe =
+          new Recipe(_random.nextInt(randomMaxValue).toString(), getDummyTag());
+      try {
+        var recipeOgp = await convertToRecipeList(randomRecipe);
+        ogpList.add(recipeOgp);
+        yield ogpList;
+      } catch (err) {
+        print('Caught error: $err');
+      }
+    } while (ogpList.length < showRecipeListSize);
   }
 
   Future<RecipeOgp> convertToRecipeList(Recipe recipe) async {
     var client = http.Client();
     var response = await client.get(recipe.getLink());
+    if (response.statusCode != 200) {
+      return throw 'not found';
+    }
     var document = parse(response.body);
     return convertToRecipe(document.head.getElementsByClassName("pjax_target"));
   }
