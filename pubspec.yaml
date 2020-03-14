@@ -21,28 +21,32 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  intl:
-  intl_translation:
-  duration:
-  cupertino_icons: ^0.1.2
-  meta:
-  scoped_model:
-  flutter_bloc:
-  shared_preferences:
-  collection:
-  http:
-  equatable:
-  firebase_core:
-  cloud_firestore:
-  firebase_auth:
-  google_sign_in:
-  url_launcher:
+  intl: ^0.16.0
+  intl_translation: ^0.17.9
+  duration: ^2.0.11
+  cupertino_icons: ^0.1.3
+  font_awesome_flutter: ^8.7.0
+  meta: ^1.1.8
+  scoped_model: ^1.0.1
+  flutter_bloc: ^3.2.0
+  shared_preferences: ^0.5.6+3
+  collection: ^1.14.11
+  http: ^0.12.0+4
+  equatable: ^1.1.1
+  firebase_core: ^0.4.4+3
+  cloud_firestore: ^0.13.4+2
+  firebase_auth: ^0.15.5+2
+  google_sign_in: ^4.1.4
+  url_launcher: ^5.4.2
+  string_scanner: ^1.0.5
+  grinder: ^0.8.3+1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  grinder: ^0.8.0
-  string_scanner: 1.0.5
+  build_runner: ^1.8.0
+  build_test: ^0.10.12+1
+  build_web_compilers: ^2.9.0
 
 
 # For information on the generic Dart part of this file, see the
