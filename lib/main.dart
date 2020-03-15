@@ -45,7 +45,7 @@ class ChoosePadApp extends StatelessWidget {
         providers: [
           BlocProvider<RecipeListBloc>(
             create: (context) => RecipeListBloc(
-                recipeListRepository: DummyRecipeListRepository())
+                recipeListRepository: RecipeListRepositoryImpl())
               ..add(RecipeListLoad()),
           ),
           BlocProvider<AuthenticationBloc>(

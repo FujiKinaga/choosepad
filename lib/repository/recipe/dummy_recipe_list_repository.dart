@@ -9,7 +9,7 @@ import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
 
-class DummyRecipeListRepository extends RecipeListRepository {
+class RecipeListRepositoryImpl extends RecipeListRepository {
   var _random = new Random();
 
   @override
