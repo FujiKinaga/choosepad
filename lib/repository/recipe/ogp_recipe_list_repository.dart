@@ -16,7 +16,12 @@ class RecipeListRepositoryImpl extends RecipeListRepository {
   Stream<List<RecipeOgp>> fetch() async* {
     var ogpList = List<RecipeOgp>();
 
+    var currentRetryCount = 0;
+
     do {
+      if (currentRetryCount > maxRetryCount) {
+        yield throw 'may cross origin error';
+      }
       var randomRecipe =
           new Recipe(_random.nextInt(randomMaxValue).toString(), getDummyTag());
       try {
@@ -24,6 +29,7 @@ class RecipeListRepositoryImpl extends RecipeListRepository {
         ogpList.add(recipeOgp);
         yield ogpList;
       } catch (err) {
+        currentRetryCount++;
         print('Caught error: $err');
       }
     } while (ogpList.length < showRecipeListSize);
