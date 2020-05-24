@@ -48,7 +48,7 @@ class FirestoreRecipeListRepositoryImpl extends RecipeListRepository {
   RecipeOgp convertToRecipe(Map<String, dynamic> els) {
     var ogp = RecipeOgp();
     ogp.url = els["url"].toString();
-    ogp.title = els["title"].toString();
+    ogp.title = els["title"].toString().replaceAll('| クックパッド料理動画', '');
     ogp.description = els["description"].toString();
     ogp.image = els["image"].toString();
     ogp.video = els["video"].toString();
