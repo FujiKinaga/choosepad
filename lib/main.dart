@@ -7,6 +7,7 @@ import 'package:choosepad/bloc/user/authentication_event.dart';
 import 'package:choosepad/bloc/user/sign_in_bloc.dart';
 import 'package:choosepad/bloc/user/sign_in_event.dart';
 import 'package:choosepad/pages/home.dart';
+import 'package:choosepad/repository/recipe/firestore_recipe_list_repository.dart';
 import 'package:choosepad/repository/recipe/ogp_recipe_list_repository.dart';
 import 'package:choosepad/repository/user/firebase_authentication_repository.dart';
 import 'package:choosepad/repository/user/firebase_sign_in_repository.dart';
@@ -45,7 +46,7 @@ class ChoosePadApp extends StatelessWidget {
         providers: [
           BlocProvider<RecipeListBloc>(
             create: (context) => RecipeListBloc(
-                recipeListRepository: RecipeListRepositoryImpl())
+                recipeListRepository: FirestoreRecipeListRepositoryImpl())
               ..add(RecipeListLoad()),
           ),
           BlocProvider<AuthenticationBloc>(
