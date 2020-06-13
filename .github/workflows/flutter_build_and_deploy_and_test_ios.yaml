@@ -38,7 +38,7 @@ jobs:
         env:
           BUNDLE_JOBS: 4
           BUNDLE_RETRY: 3
-        run: bundle config set path 'vendor/bundle'
+        run: bundle config set path 'vendor/bundle' && bundle install
       - name: Firebase Toolsをインストール
         run: npm i firebase-tools
       - uses: actions/cache@v1
