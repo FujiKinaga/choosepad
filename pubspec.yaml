@@ -49,6 +49,7 @@ dev_dependencies:
   build_test: ^0.10.12+1
   build_web_compilers: ^2.9.0
   flutter_launcher_icons: ^0.7.5
+  pedantic_mono: any
 
 flutter_icons:
   android: true
