@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 abstract class RecipeListEvent extends Equatable {
   @override
-  List<Object> get props => [const []];
+  List<Object> get props => [];
 }
 
 class RecipeListLoad extends RecipeListEvent {

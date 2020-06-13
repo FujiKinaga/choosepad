@@ -34,7 +34,7 @@ class ChoosePadThemeData {
           _lightFillColor.withOpacity(0.80),
           _darkFillColor,
         ),
-        contentTextStyle: _textTheme.subhead.apply(color: _darkFillColor),
+        contentTextStyle: _textTheme.subtitle1.apply(color: _darkFillColor),
       ),
     );
   }
@@ -72,15 +72,15 @@ class ChoosePadThemeData {
   );
 
   static TextTheme _textTheme = TextTheme(
-    display1: _ChoosePadTextStyles.heading,
+    headline4: _ChoosePadTextStyles.heading,
     caption: _ChoosePadTextStyles.studyTitle,
-    headline: _ChoosePadTextStyles.categoryTitle,
-    subhead: _ChoosePadTextStyles.listTitle,
+    headline5: _ChoosePadTextStyles.categoryTitle,
+    subtitle1: _ChoosePadTextStyles.listTitle,
     overline: _ChoosePadTextStyles.listDescription,
-    body2: _ChoosePadTextStyles.sliderTitle,
-    subtitle: _ChoosePadTextStyles.settingsFooter,
-    body1: _ChoosePadTextStyles.options,
-    title: _ChoosePadTextStyles.title,
+    bodyText1: _ChoosePadTextStyles.sliderTitle,
+    subtitle2: _ChoosePadTextStyles.settingsFooter,
+    bodyText2: _ChoosePadTextStyles.options,
+    headline6: _ChoosePadTextStyles.title,
     button: _ChoosePadTextStyles.button,
   );
 }

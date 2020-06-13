@@ -52,8 +52,8 @@ class FirestoreRecipeListRepositoryImpl extends RecipeListRepository {
     ogp.description = els["description"].toString();
     ogp.image = els["image"].toString();
     ogp.video = els["video"].toString();
-    ogp.videoHeight = els["videoHeight"];
-    ogp.videoWidth = els["videoWidth"];
+    ogp.videoHeight = els["videoHeight"] as int;
+    ogp.videoWidth = els["videoWidth"] as int;
     return ogp;
   }
 }

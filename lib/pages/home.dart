@@ -1,7 +1,5 @@
 import 'package:choosepad/bloc/recipe/recipe_list_bloc.dart';
 import 'package:choosepad/bloc/recipe/recipe_list_state.dart';
-import 'package:choosepad/bloc/user/authentication_bloc.dart';
-import 'package:choosepad/bloc/user/sign_in_bloc.dart';
 import 'package:choosepad/data/recipe_ogp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -15,8 +13,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final recipeListBloc = BlocProvider.of<RecipeListBloc>(context);
-    final authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
-    final signInBloc = BlocProvider.of<SignInBloc>(context);
+    // final authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
+    // final signInBloc = BlocProvider.of<SignInBloc>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -96,7 +94,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  _launchURL(String url) async {
+  dynamic _launchURL(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
     } else {

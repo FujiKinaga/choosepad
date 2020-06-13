@@ -1,0 +1,133 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  before_all do
+    ENV["FL_OUTPUT_DIR"] = 'temp'
+
+    clear_derived_data(derived_data_path: "./DerivedData")
+    sh "rm -rf ../build"
+  end
+
+  desc "Runs setup"
+  lane :setup do
+    unless File.exist?("../Pods/Manifest.lock") && FileUtils.cmp("../Podfile.lock", "../Pods/Manifest.lock") then
+      cocoapods(verbose: true)
+    end
+  end
+
+  # fadレーン
+  desc "アプリをFirebase App Distributionで配布します"
+  lane :fad do
+
+    if is_ci?
+      setup_circle_ci
+      import_certificate(
+        certificate_path: "apple-distribution-mycompany-inc.p12",
+        certificate_password: "",
+        keychain_name: ENV["MATCH_KEYCHAIN_NAME"],
+        keychain_password: ENV["MATCH_KEYCHAIN_PASSWORD"]
+      )
+    end
+
+    automatic_code_signing(
+      targets: ENV["PROJECT_NAME"],
+      use_automatic_signing: false
+    )
+
+    update_app_identifier(
+      xcodeproj: ENV["PROJECT_NAME"] + ".xcodeproj",
+      plist_path: ENV["PLIST_PATH"],
+      app_identifier: ENV["BUNDLE_ID"]
+    )
+
+    # アプリをビルドし、ipaファイルを作成する
+    gym(
+      configuration: "Release",
+      derived_data_path: "./DerivedData",
+      clean: true,
+      verbose: true,
+      scheme: ENV["SCHEME_NAME"],
+      export_method: "ad-hoc",
+      output_directory: "./build/ipa/" + Time.new.strftime("%Y/%m/%d/%H%M"),
+      output_name: ENV["PROJECT_NAME"] + ".ipa",
+      include_bitcode: false,
+      xcargs: "OTHER_SWIFT_FLAGS='$(inherited) -DSTGING' PROVISIONING_PROFILE='" + ENV["PROVISIONING_PROFILE_NAME"] + "' PROVISIONING_PROFILE_SPECIFIER='" + ENV["PROVISIONING_PROFILE_SPECIFIER"] + "' CODE_SIGN_IDENTITY='" + ENV["CODE_SIGN_IDENTITY"] + "'",
+      export_xcargs: "-allowProvisioningUpdates",
+      export_options: {
+        method: "ad-hoc",
+        compileBitcode: false,
+        uploadBitcode: false,
+        provisioningProfiles: {
+          ENV["BUNDLE_ID"] => ENV["PROVISIONING_PROFILE_SPECIFIER"]
+        }
+      }
+    )
+
+    # Firebase App Distribution にアプリをアップロードする
+    firebase_app_distribution(
+      app: ENV["FIREBASE_APP_ID"],
+      groups:"me",
+      release_notes: "Firebase App Distributionからの配信 " + Time.new.strftime("%Y/%m/%d %H:%M") + "版リリース(" + ENV["CIRCLE_BRANCH"] + ")",
+      firebase_cli_path: "./node_modules/.bin/firebase"
+    )
+
+    # 処理完了メッセージをSlackに投稿する
+    slack(message: "PROJECTNAME(" + ENV["CIRCLE_BRANCH"] + ")をFirebase App Distributionにデプロイしました。",
+              slack_url: ENV["SLACK_API_TOKEN"])
+  end
+
+  desc "Runs all the tests"
+  lane :test do
+    run_tests(scheme: "RunnerTests",
+              slack_url: "https://hooks.slack.com/services/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")
+  end
+
+  desc "Submit a new Beta Build"
+  lane :beta do
+    build_app(scheme: "Runner",
+              export_options: {method: "ad-hoc"},
+              workspace: "Runner.xcworkspace",
+              include_bitcode: true)
+    firebase_app_distribution(
+          app:"1:1090258945629:ios:9ac1d803b36f1047626fb4",
+          groups:"me",
+          firebase_cli_path:"/usr/local/bin/firebase"
+        )
+    slack(message: 'Successfully beta iOS workflow',
+          slack_url: "https://hooks.slack.com/services/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")
+
+    # sh "your_script.sh"
+    # You can also use other beta testing services here
+  end
+
+  desc "Deploy a new version to the App Store"
+  lane :deploy do
+    ensure_git_status_clean
+    increment_build_number(xcodeproj: "Runner.xcodeproj")
+    commit_version_bump(xcodeproj: "Runner.xcodeproj")
+    add_git_tag
+    push_to_git_remote
+    sync_code_signing(type: "appstore")
+    build_app(scheme: "Runner",
+              workspace: "Runner.xcworkspace",
+              include_bitcode: true)
+    upload_to_testflight
+    slack(message: 'Successfully distributed a new beta iOS build',
+          slack_url: "https://hooks.slack.com/services/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")
+  end
+end
