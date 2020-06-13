@@ -1,0 +1,58 @@
+name: Flutter_Web_Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  flutter_build_web:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: 'beta'
+      - run: ./scripts/setup_flutter_web.sh
+      - run: flutter build web
+      - uses: actions/upload-artifact@master
+        with:
+          name: choosepad_web
+          path: build/web
+
+  firebase_hosting_deploy:
+    needs: flutter_build_web
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: start deployment
+        uses: bobheadxi/deployments@master
+        id: deployment
+        with:
+          step: start
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: Web_Hosting-dev
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/download-artifact@master
+        with:
+          name: choosepad_web
+          path: build/web
+      - uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting -P dev
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_DEV_TOKEN }}
+      - name: update deployment status
+        uses: bobheadxi/deployments@master
+        if: always()
+        with:
+          step: finish
+          token: ${{ secrets.GITHUB_TOKEN }}
+          status: ${{ job.status }}
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          env_url: https://choosepad-65b8c.web.app/
