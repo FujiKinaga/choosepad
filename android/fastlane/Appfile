@@ -1,0 +1,2 @@
+json_key_file("/Users/fujikinaga/workspace/choosepad-65b8c-56026910b5a5.json") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
+package_name("com.fujikinaga.choosepad") # e.g. com.krausefx.app

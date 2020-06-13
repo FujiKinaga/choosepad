@@ -1,0 +1,6 @@
+# app_identifier("com.fujikinaga.choosepad") # The bundle identifier of your app
+# apple_id("kinakita071031@i.softbank.jp") # Your Apple email address
+
+
+# For more information about the Appfile, see:
+#     https://docs.fastlane.tools/advanced/#appfile
