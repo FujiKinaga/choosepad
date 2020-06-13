@@ -1,4 +1,4 @@
-name: Flutter_Format
+name: Flutter_Formatter
 
 on:
   pull_request:
