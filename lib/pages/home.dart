@@ -15,8 +15,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final recipeListBloc = BlocProvider.of<RecipeListBloc>(context);
-    final authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
-    final signInBloc = BlocProvider.of<SignInBloc>(context);
+    // final authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
+    // final signInBloc = BlocProvider.of<SignInBloc>(context);
 
     return Scaffold(
       appBar: AppBar(
