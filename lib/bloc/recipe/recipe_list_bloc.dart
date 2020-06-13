@@ -25,8 +25,9 @@ class RecipeListBloc extends Bloc<RecipeListEvent, RecipeListState> {
     yield RecipeListInProgress();
     try {
       yield RecipeListSuccess(recipeList: _recipeListRepository.fetch());
-    } catch (_) {
-      yield RecipeListFailure(error: _);
+    }
+    on Exception {
+      yield RecipeListFailure(error: Error());
     }
   }
 }

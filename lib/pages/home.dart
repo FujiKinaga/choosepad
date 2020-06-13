@@ -94,7 +94,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  _launchURL(String url) async {
+  dynamic _launchURL(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
     } else {

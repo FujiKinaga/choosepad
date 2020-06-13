@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 abstract class RecipeListState extends Equatable {
   @override
-  List<Object> get props => [const []];
+  List<Object> get props => [];
 }
 
 class RecipeListEmpty extends RecipeListState {
