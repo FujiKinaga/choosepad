@@ -16,6 +16,16 @@ or alternatively using `brew cask install fastlane`
 
 # Available Actions
 ## iOS
+### ios setup
+```
+fastlane ios setup
+```
+Runs setup
+### ios fad
+```
+fastlane ios fad
+```
+アプリをFirebase App Distributionで配布します
 ### ios test
 ```
 fastlane ios test

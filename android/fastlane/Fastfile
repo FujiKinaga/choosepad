@@ -23,23 +23,44 @@ platform :android do
 
   desc "Submit a new Beta Build"
   lane :beta do
-    gradle(task: "clean assembleRelease")
+    gradle(
+      task: 'assemble',
+      build_type: 'Release',
+      print_command: false,
+      properties: {
+          "android.injected.signing.store.file" => "/Users/fujikinaga/key.jks",
+          "android.injected.signing.store.password" => "fujikinaga",
+          "android.injected.signing.key.alias" => "key",
+          "android.injected.signing.key.password" => "fujikinaga",
+        }
+    )
     firebase_app_distribution(
-              app:"1:1090258945629:android:53990f2a1332638c626fb4",
-              groups:"me",
-              firebase_cli_path:"/usr/local/bin/firebase"
+              app: "1:1090258945629:android:53990f2a1332638c626fb4",
+              groups: "me",
+              apk_path: "../build/app/outputs/apk/release/app-release.apk",
+              firebase_cli_path: "/usr/local/bin/firebase"
             )
     slack(message: 'Successfully beta Android workflow',
           slack_url: "https://hooks.slack.com/services/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")
-  
-    # sh "your_script.sh"
-    # You can also use other beta testing services here
   end
 
   desc "Deploy a new version to the Google Play"
   lane :deploy do
-    gradle(task: "clean assembleRelease")
-    upload_to_play_store(track: 'beta')
+    gradle(
+      task: 'bundle',
+      build_type: 'Release',
+      print_command: false,
+      properties: {
+          "android.injected.signing.store.file" => "/Users/fujikinaga/key.jks",
+          "android.injected.signing.store.password" => "fujikinaga",
+          "android.injected.signing.key.alias" => "key",
+          "android.injected.signing.key.password" => "fujikinaga",
+        }
+    )
+    upload_to_play_store(
+      track: 'beta',
+      aab: "../build/app/outputs/bundle/release/app-release.aab"
+    )
     slack(message: 'Successfully distributed a new beta Android build',
           slack_url: "https://hooks.slack.com/services/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")
   end
